@@ -18,13 +18,17 @@ struct MainView: View {
             
             Button("Save") {
                 let albumsData = Album.randomData(count: 5)
-                FileSysytemApproach.shared.save(objects: albumsData)
+                Task {
+                    try? await FileSysytemApproach.shared.save(objects: albumsData, folder: "007")
+                }
             }
             .padding()
             
             Button("Load") {
-                let albums = FileSysytemApproach.shared.loadAll()
-                print(albums)
+                Task {
+                    let albums = try? await FileSysytemApproach.shared.loadAll(from: "007")
+                    print(albums ?? "Empty")
+                }
             }
             .padding()
         }

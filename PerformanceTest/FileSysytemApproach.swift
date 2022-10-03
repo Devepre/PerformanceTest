@@ -16,20 +16,22 @@ class FileSysytemApproach {
     }
     private let decoder = JSONDecoder()
     
-    func save(objects: [UUID: Data]) {
-        Task {
-            let start = Date().timeIntervalSince1970
-            for (key, value) in objects {
-                try await storeToDisk(value, name: key.uuidString)
-            }
-            let end = Date().timeIntervalSince1970
-            print(end - start)
+    func save(objects: [UUID: Data], folder: String) async throws {
+        for (key, value) in objects {
+            try await storeToDisk(value, name: key.uuidString, folder: folder)
         }
     }
     
-    func loadAll() -> [Album] {
-        guard let fileURLs = try? fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil) else {
-            return []
+    func synchronouslySave(objects: [UUID: Data], folder: String) {
+        for (key, value) in objects {
+            _storeToDisk(value, name: key.uuidString, folder: folder)
+        }
+    }
+    
+    func loadAll(from folder: String) async throws -> [Album] {
+        let path = documentsDirectory.appendingPathComponent(folder, isDirectory: true)
+        guard let fileURLs = try? fileManager.contentsOfDirectory(at: path, includingPropertiesForKeys: nil) else {
+            throw GeneralError.folderIsAbsent
         }
         var result: [Album] = []
         result.reserveCapacity(fileURLs.count)
@@ -49,12 +51,40 @@ class FileSysytemApproach {
             return
         }
         fileURLs.forEach {
-            try? fileManager.removeItem(at: $0)
+            try! fileManager.removeItem(at: $0)
         }
     }
     
-    private func storeToDisk(_ data: Data, name: String) async throws {
-        let fileURL = documentsDirectory.appendingPathComponent(name)
+    func getNumberOfFiles(folder: String) -> Int {
+        let path = documentsDirectory.appendingPathComponent(folder, isDirectory: true)
+        guard let fileURLs = try? fileManager.contentsOfDirectory(at: path, includingPropertiesForKeys: nil) else {
+            return 0
+        }
+        
+        return fileURLs.count
+    }
+    
+    private func storeToDisk(_ data: Data, name: String, folder: String) async throws {
+        let folderURL = documentsDirectory
+            .appendingPathComponent(folder, isDirectory: true)
+        if !fileManager.fileExists(atPath: folderURL.path) {
+            try! fileManager.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true)
+        }
+        let fileURL = folderURL.appendingPathComponent(name, isDirectory: false)
         try data.write(to: fileURL)
     }
+    
+    private func _storeToDisk(_ data: Data, name: String, folder: String) {
+        let folderURL = documentsDirectory
+            .appendingPathComponent(folder, isDirectory: true)
+        if !fileManager.fileExists(atPath: folderURL.path) {
+            try! fileManager.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true)
+        }
+        let fileURL = folderURL.appendingPathComponent(name, isDirectory: false)
+        try? data.write(to: fileURL)
+    }
+}
+
+enum GeneralError: Error {
+    case folderIsAbsent
 }

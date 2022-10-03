@@ -23,7 +23,7 @@ struct Album: Codable {
     }
     
     static func randomData(count: Int) -> [UUID: Data] {
-        var input = Self.random(count)
+        let input = Self.random(count)
         var objects: [UUID: Data] = [:]
         input.forEach {
             objects[UUID()] = $0.data()
