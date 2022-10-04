@@ -1,14 +1,16 @@
 name: Pull Request
-
 on:
   pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+    branches [ main ]
 
 jobs:
   test:
     runs-on: macos-12
+
+    env:
+      ME_GITHUB_NAME: Builder Bot
+      ME_GITHUB_EMAIL: tech+githubbuilder@aibetic.com
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 120
 
     steps:
       - uses: actions/checkout@v2
