@@ -1,24 +1,29 @@
 name: Pull Request
 on:
   pull_request:
-    branches [ main ]
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: macos-12
 
-steps:
-      - name: Setup ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.3
-          bundler-cache: true
+    steps:
       - uses: actions/checkout@v2
-      - uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+
       - uses: ruby/setup-ruby@v1
-      - run: gem install bundler
-      - run: bundle install
-      - run: bundle exec fastlane tests
+
+      - name: Install Bundler
+        run: gem install bundler
+
+      - name: Install gems
+        run: bundle install
+
+       - name Run Tests
+        run: bundle exec fastlane tests
