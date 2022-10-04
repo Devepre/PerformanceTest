@@ -15,8 +15,8 @@ final class PerformanceTestTests: XCTestCase {
     
     private var fileSysytemApproach: FileSysytemApproach!
     private let albumsData3 = Album.randomData(count: 3)
-    private let albumsData200 = Album.randomData(count: 200)
-    private let albumsData1000 = Album.randomData(count: 4000)
+    private let albumsData200 = Album.randomData(count: 20)
+    private let albumsData1000 = Album.randomData(count: 40)
 //    private let albumsData9000 = Album.randomData(count: 9000)
     
     var persistentContainer: NSPersistentContainer = {
@@ -50,6 +50,7 @@ final class PerformanceTestTests: XCTestCase {
         fileSysytemApproach.deleteAllFiles()
     }
     
+    /*
     func testCore() throws {
         for (key, value) in albumsData1000 {
             let newItem = Item(context: context)
@@ -146,6 +147,7 @@ final class PerformanceTestTests: XCTestCase {
             wait(for: [expectation], timeout: 10.0)
         }
     }
+     */
     
     func testLoadInPara1000() throws {
         let id = UUID().uuidString
