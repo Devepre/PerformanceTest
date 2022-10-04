@@ -8,6 +8,11 @@ jobs:
     runs-on: macos-12
 
 steps:
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.3
+          bundler-cache: true
       - uses: actions/checkout@v2
       - uses: styfle/cancel-workflow-action@0.9.1
       - uses: maxim-lobanov/setup-xcode@v1
