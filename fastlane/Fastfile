@@ -1,0 +1,15 @@
+default_platform(:ios)
+
+platform :ios do
+    desc "Unit tests"
+    lane :tests do
+          run_tests(scheme: "PerformanceTest",
+          slack_url: "https://hooks.slack.com/services/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",
+                    slack_channel: "#performance")
+                
+        error do |ex|
+          slack(message: "Tests have failed!",
+          channel: "#performance")
+        end
+    end
+end
