@@ -38,3 +38,6 @@ jobs:
             Build/Build/Products
           key: ${{ runner.os }}-deps-v1-${{ hashFiles('BILDsolid.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
           restore-keys: ${{ runner.os }}-deps-v1-
+
+          - name Run Tests
+          run: bundle exec fastlane tests
