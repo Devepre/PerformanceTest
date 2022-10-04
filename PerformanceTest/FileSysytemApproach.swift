@@ -34,13 +34,14 @@ class FileSysytemApproach {
             throw GeneralError.folderIsAbsent
         }
         var result: [Album] = []
-        result.reserveCapacity(fileURLs.count)
+//        result.reserveCapacity(fileURLs.count)
         
         fileURLs.forEach {
-            if let data = try? Data(contentsOf: $0),
-               let object = try? decoder.decode(Album.self, from: data) {
-                result.append(object)
-            }
+            let data = try? Data(contentsOf: $0)
+//            if let data = try? Data(contentsOf: $0),
+//               let object = try? decoder.decode(Album.self, from: data) {
+//                result.append(object)
+//            }
         }
         
         return result

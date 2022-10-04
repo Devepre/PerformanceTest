@@ -16,7 +16,7 @@ final class PerformanceTestTests: XCTestCase {
     private var fileSysytemApproach: FileSysytemApproach!
     private let albumsData3 = Album.randomData(count: 3)
     private let albumsData200 = Album.randomData(count: 200)
-    private let albumsData1000 = Album.randomData(count: 1000)
+    private let albumsData1000 = Album.randomData(count: 4000)
 //    private let albumsData9000 = Album.randomData(count: 9000)
     
     var persistentContainer: NSPersistentContainer = {
