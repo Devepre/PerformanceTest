@@ -46,6 +46,32 @@ class FileSysytemApproach {
         return result
     }
     
+    func loadAllParallel(from folder: String) async throws -> [Album] {
+        let path = documentsDirectory.appendingPathComponent(folder, isDirectory: true)
+        guard let fileURLs = try? fileManager.contentsOfDirectory(at: path, includingPropertiesForKeys: nil) else {
+            throw GeneralError.folderIsAbsent
+        }
+        var result: [Album] = []
+        result.reserveCapacity(fileURLs.count)
+
+        try await withThrowingTaskGroup(of: Album.self, body: { group in
+            for url in fileURLs {
+                group.addTask {
+                    let data = try! Data(contentsOf: url)
+                    let object = try! self.decoder.decode(Album.self, from: data)
+                    return object
+                }
+                
+                var result: [Album] = []
+                for try await obj in group {
+                    result.append(obj)
+                }
+            }
+        })
+        
+        return result
+    }
+    
     func deleteAllFiles() {
         guard let fileURLs = try? fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil) else {
             return

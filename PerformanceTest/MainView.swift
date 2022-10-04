@@ -31,6 +31,8 @@ struct MainView: View {
                 }
             }
             .padding()
+            
+            Divider()
         }
         .onAppear {
             print(NSHomeDirectory())
