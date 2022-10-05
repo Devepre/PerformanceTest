@@ -7,6 +7,9 @@ jobs:
   test:
     runs-on: macos-12
 
+    env:
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 120
+
     steps:
       - uses: actions/checkout@v2
 
@@ -43,7 +46,7 @@ jobs:
         run: bundle exec fastlane tests
 
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
         if: always()
         with:
           files: report-*.xml
