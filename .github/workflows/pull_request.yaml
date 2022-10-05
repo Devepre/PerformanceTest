@@ -9,11 +9,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - uses: styfle/cancel-workflow-action@0.9.1
+
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+
       - uses: ruby/setup-ruby@v1
+
       - run: gem install bundler
+
       - run: bundle install
-      - run: bundle exec fastlane tests
+
+      - name: Swift Packages Cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            Build/SourcePackages
+            Build/Build/Products
+          key: ${{ runner.os }}-deps-v1-${{ hashFiles('PerformanceTest.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: ${{ runner.os }}-deps-v1-
+
+      - name: Run Tests (No Cache)
+        if: steps.setup.outputs.cache-hit != 'true'
+        run: bundle exec fastlane test
+      
+      - name: Run Tests (Cache)
+        if: steps.setup.outputs.cache-hit == 'true'
+        run: bundle exec fastlane test skip_package_dependencies_resolution:true
