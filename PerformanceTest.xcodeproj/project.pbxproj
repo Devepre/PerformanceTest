@@ -18,6 +18,7 @@
 		8E60E0D328EB5F8100A37942 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E60E0D228EB5F8100A37942 /* String+Ext.swift */; };
 		8E60E0D528EB664D00A37942 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E60E0D428EB664D00A37942 /* MainView.swift */; };
 		8E60E0D728EB6A3700A37942 /* FileSysytemApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E60E0D628EB6A3700A37942 /* FileSysytemApproach.swift */; };
+		8EF350C528ED6800002C210F /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF350C428ED6800002C210F /* JWTDecode */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EF350C528ED6800002C210F /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +133,9 @@
 			dependencies = (
 			);
 			name = PerformanceTest;
+			packageProductDependencies = (
+				8EF350C428ED6800002C210F /* JWTDecode */,
+			);
 			productName = PerformanceTest;
 			productReference = 8E60E09E28EB5CF500A37942 /* PerformanceTest.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +186,9 @@
 				Base,
 			);
 			mainGroup = 8E60E09528EB5CF500A37942;
+			packageReferences = (
+				8EF350C328ED6800002C210F /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = 8E60E09F28EB5CF500A37942 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -494,6 +502,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8EF350C328ED6800002C210F /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8EF350C428ED6800002C210F /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8EF350C328ED6800002C210F /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8E60E0AC28EB5CF600A37942 /* PerformanceTest.xcdatamodeld */ = {
