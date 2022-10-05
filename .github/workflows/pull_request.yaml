@@ -49,12 +49,12 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
         if: always()
         with:
-          files: report-*.xml
+          files: fastlane/report.xml
 
       - name: Save test report
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: test-report
-          path: test_output/report.html
+          path: fastlane/test_output/report.html
           retention-days: 365
