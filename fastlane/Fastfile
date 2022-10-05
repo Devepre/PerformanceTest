@@ -4,7 +4,7 @@ platform :ios do
     desc "Unit tests"
     lane :tests do
           run_tests(scheme: "PerformanceTest",
-          slack_url: "https://hooks.slack.com/services/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",
+          slack_url: "https://hooks.slack.com/services/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",
                     slack_channel: "#performance"
                     )
                 
