@@ -31,10 +31,27 @@ jobs:
             restore-keys: |
                ${{ runner.os }}-spm-
 
-      - name: Run Tests (No SPM Cache)
-        if: steps.setup.outputs.cache-hit != 'true'
-        run: bundle exec fastlane tests
+      #- name: Run Tests (No SPM Cache)
+      #  if: steps.setup.outputs.cache-hit != 'true'
+      #  run: bundle exec fastlane tests
       
-      - name: Run Tests (SPM Cache)
+      - name: Run Tests (Using SPM Cache)
         if: steps.setup.outputs.cache-hit == 'true'
         run: bundle exec fastlane tests skip_package_dependencies_resolution:true
+
+      - name: Run Tests (No SPM Cache)
+        run: bundle exec fastlane tests
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: report-*.xml
+
+      - name: Save test report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-report
+          path: test_output/report.html
+          retention-days: 365
