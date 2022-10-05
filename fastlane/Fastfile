@@ -8,9 +8,9 @@ platform :ios do
             skip_package_dependencies_resolution: options[:skip_package_dependencies_resolution]
             )
                 
-        error do |ex|
-          slack(message: "Tests have failed!",
-          channel: "#performance")
-        end
+        #error do |ex|
+          #slack(message: "Tests have failed!",
+          #channel: "#performance")
+        #end
     end
 end
