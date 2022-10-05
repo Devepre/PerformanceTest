@@ -4,11 +4,10 @@ platform :ios do
     desc "Unit tests"
     lane :tests do |options|
           scan(
-            clean: options[:clean],
             skip_package_dependencies_resolution: options[:skip_package_dependencies_resolution]
             )
                 
-            
+
         #error do |ex|
           #slack(message: "Tests have failed!",
           #channel: "#performance")

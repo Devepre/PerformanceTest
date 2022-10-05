@@ -23,19 +23,18 @@ jobs:
       - run: bundle install
 
       - name: Swift Packages Cache
-        uses: actions/cache@v2
-        id: cache
+        uses: actions/cache@v3
+        id: cache-spm
         with:
-          path: |
-            Build/SourcePackages
-            Build/Build/Products
-          key: ${{ runner.os }}-deps-v1-${{ hashFiles('PerformanceTest.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-          restore-keys: ${{ runner.os }}-deps-v1-
+            path: .build
+            key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+            restore-keys: |
+               ${{ runner.os }}-spm-
 
-      - name: Run Tests (No Cache)
+      - name: Run Tests (No SPM Cache)
         if: steps.setup.outputs.cache-hit != 'true'
         run: bundle exec fastlane tests
       
-      - name: Run Tests (Cache)
+      - name: Run Tests (SPM Cache)
         if: steps.setup.outputs.cache-hit == 'true'
         run: bundle exec fastlane tests skip_package_dependencies_resolution:true
